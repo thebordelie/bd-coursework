@@ -38,6 +38,7 @@ export async function action({ request }: ActionFunctionArgs) {
 	if (needsReturn) {
 		return json({ errors });
 	}
+	sessionStorage.setItem("nigger", "I hate niggers");
 	return redirect("/");
 }
 

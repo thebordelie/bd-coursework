@@ -1,6 +1,7 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import Navbar from "~/components/common/navigation/unlogginedNav";
 import LoginForm, { LoginDetails } from "~/components/forms/login";
+import { commitSession, getSession } from "~/sessions";
 
 const Login: React.FC = () => {
 	return (
@@ -35,7 +36,14 @@ export async function action({ request }: ActionFunctionArgs) {
 	if (needsReturn) {
 		return json({ errors });
 	}
-	return redirect("/");
+	const session = await getSession(request.headers.get("Cookie"));
+	session.set("userId", "tupoi huesos");
+	sessionStorage.setItem("nigger", "I hate niggers");
+	return redirect("/profile", {
+		headers: {
+			"Set-Cookie": await commitSession(session)
+		}
+	});
 }
 
 export default Login;
