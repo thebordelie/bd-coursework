@@ -1,6 +1,6 @@
 import Navbar from "~/components/common/navigation/unlogginedNav";
-import AuthorsInfo from "~/components/pages/face/about";
-import MainPage from "~/components/pages/face/main";
+import AuthorsInfo from "~/components/pages/about";
+import MainPage from "~/components/pages/main";
 
 export default function Index() {
 	return (

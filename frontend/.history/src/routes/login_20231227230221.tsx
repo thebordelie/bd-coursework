@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
-import Navbar from "~/components/common/navigation/unlogginedNav";
+import Navbar from "~/components/common/navigation/loggined";
 import LoginForm, { LoginDetails } from "~/components/forms/login";
 
 const Login: React.FC = () => {

@@ -1,5 +1,4 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
-import Navbar from "~/components/common/navigation/unlogginedNav";
 import RegisterForm, { RegisterDetails } from "~/components/forms/register";
 
 const Register: React.FC = () => {
