@@ -1,6 +1,7 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import Navbar from "~/components/common/navigation/unlogginedNav";
 import RegisterForm, { RegisterDetails } from "~/components/forms/register";
+import { APIEndpoints, APILINK } from "~/root";
 
 const Register: React.FC = () => {
 	return (
@@ -38,8 +39,30 @@ export async function action({ request }: ActionFunctionArgs) {
 	if (needsReturn) {
 		return json({ errors });
 	}
-	sessionStorage.setItem("nigger", "I hate niggers");
-	return redirect("/");
+	const fullname = `${body.get("surname")} ${body.get("name")} ${body.get("father_name")}`;
+	try {
+		const result = await fetch(APILINK + APIEndpoints.register, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				city: body.get("city"),
+				gender: body.get("gender"),
+				login: body.get("login"),
+				fullName: fullname,
+				password: body.get("password"),
+			})
+		});
+		if (!result.ok) {
+			errors.login = "Пошел на хуй)))...";
+			return json({ errors });
+		}
+	}
+	catch (error) {
+		// poh
+	}
+	return redirect("/profile");
 }
 
 export default Register;

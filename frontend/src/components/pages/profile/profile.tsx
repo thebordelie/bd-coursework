@@ -14,7 +14,7 @@ const UserProfile: React.FC = () => {
 			</div>
 			<div className="mb-4">
 				<h1 className="text-gray-700 font-semibold">Пол:</h1>
-				<p className="text-gray-800">{loaderProps.gender}</p>
+				<p className="text-gray-800">{loaderProps.gender === "male" ? "Мужской" : "Женский"}</p>
 			</div>
 			<div className="mb-4">
 				<h1 className="text-gray-700 font-semibold">Город:</h1>
@@ -22,7 +22,7 @@ const UserProfile: React.FC = () => {
 			</div>
 			<div>
 				<h1 className="text-gray-700 font-semibold">Роль:</h1>
-				<p className="text-gray-800">{loaderProps.role}</p>
+				<p className="text-gray-800">{loaderProps.role === "Default" ? "Участник" : "Организатор"}</p>
 			</div>
 		</div>
 	);

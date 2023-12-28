@@ -1,4 +1,4 @@
-import { Form, useActionData } from "@remix-run/react";
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 
 export const LoginDetails = {
 	login: "login",
@@ -8,6 +8,7 @@ export const LoginDetails = {
 const LoginForm = () => {
 
 	const actionData = useActionData<{ errors: typeof LoginDetails }>();
+	const navigation = useNavigation();
   
 	return (
 		<div className="min-h-screen flex items-center justify-center">
@@ -44,6 +45,7 @@ const LoginForm = () => {
 				)}
 				<div className="flex items-center justify-between mt-6">
 					<button
+						disabled={ navigation.state === "submitting" }
 						className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 						type="submit"
 					>

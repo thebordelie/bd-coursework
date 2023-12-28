@@ -1,4 +1,4 @@
-import { Form, useActionData } from "@remix-run/react";
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 import { ChangeEvent, useState } from "react";
 
 export const RegisterDetails = {
@@ -14,6 +14,7 @@ export const RegisterDetails = {
 const RegisterForm = () => {
 
 	const actionData = useActionData<{ errors: typeof RegisterDetails }>();
+	const navigation = useNavigation();
 
 	const [registerDetails, setRegisterDetails] = useState({
 		password: "",
@@ -163,6 +164,7 @@ const RegisterForm = () => {
 				</div>
 				<div className="flex items-center justify-between">
 					<button
+						disabled={ navigation.state === "submitting" }
 						className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 						type="submit"
 					>

@@ -1,6 +1,7 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import Navbar from "~/components/common/navigation/unlogginedNav";
 import LoginForm, { LoginDetails } from "~/components/forms/login";
+import { APIEndpoints, APILINK } from "~/root";
 import { commitSession, getSession } from "~/sessions";
 
 const Login: React.FC = () => {
@@ -36,9 +37,33 @@ export async function action({ request }: ActionFunctionArgs) {
 	if (needsReturn) {
 		return json({ errors });
 	}
+	let data = null;
+	try {
+		const result = await fetch(APILINK + APIEndpoints.login, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				login: body.get("login"),
+				password: body.get("password"),
+			})
+		});
+		if (!result.ok) {
+			errors.password = "Пошел на хуй)))...";
+			return json({ errors });
+		}
+		data = await result.json();
+	}
+	catch (error) {
+		return json({ errors });
+	}
 	const session = await getSession(request.headers.get("Cookie"));
-	session.set("userId", "tupoi huesos");
-	sessionStorage.setItem("nigger", "I hate niggers");
+	session.set("userid", data.id);
+	session.set("fullname", data.fullName);
+	session.set("city", data.city);
+	session.set("role", data.role);
+	session.set("gender", data.gender);
 	return redirect("/profile", {
 		headers: {
 			"Set-Cookie": await commitSession(session)

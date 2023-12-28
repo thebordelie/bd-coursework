@@ -10,6 +10,12 @@ import {
 import styles from "./global.css";
 import { LinksFunction } from "@remix-run/node";
 
+export const APILINK = "http://25.74.13.166:8080/";
+export const enum APIEndpoints {
+	register = "auth/register",
+	login = "auth/login"
+}
+
 export default function App() {
 	return (
 		<html lang="en">
