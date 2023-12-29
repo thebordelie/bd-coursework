@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { LoaderFunction, json, redirect } from "@remix-run/node";
 import NavbarInner from "~/components/common/navigation/logginedNav";
 import { protectedRoute } from "~/components/common/protection/checkprotected";
@@ -31,6 +32,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 	);
 	let posts = []
 	let viewerPosts = []
+	let participatedEvents = []
 	try {
 		const response = await fetch(APILINK + APIEndpoints.all_events, {
 			method: "post",
@@ -53,6 +55,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 			})
 		});
 		viewerPosts = await viewerPostsResponse.json();
+
+		const participatedEventsRes = await fetch(APILINK + APIEndpoints.participatedEvents, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				id: await session.get("userid")
+			})
+		});
+		participatedEvents = await participatedEventsRes.json();
 	}
 	catch (error) {
 		//poh
@@ -63,7 +76,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 		city: session.get("city"),
 		role: session.get("role"),
 		posts,
-		viewerPosts
+		viewerPosts,
+		participatedEvents
 	});
 }
 

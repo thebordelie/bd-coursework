@@ -18,7 +18,11 @@ export const enum APIEndpoints {
 	all_events = "member_management/all_events",
 	viewerPosts = "member_management/user_event",
 	viewEvent = "member_management/new_event",
-	unsubscribeEvent = "member_management/delete_event"
+	unsubscribeEvent = "member_management/delete_event",
+	becomeMember = "member_management/new_member_event",
+	addMemberToVer = "member_management/new_member",
+	participatedEvents = "member_management/member_event",
+	deleteMember = "member_management/delete_member_event"
 }
 
 export default function App() {
