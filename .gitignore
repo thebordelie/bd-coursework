@@ -5,3 +5,5 @@ frontend/build
 frontend/public/build
 frontend/.env
 .DS_Store
+frontend/.history
+frontend/.vscode
