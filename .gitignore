@@ -5,5 +5,9 @@ frontend/build
 frontend/public/build
 frontend/.env
 .DS_Store
+
 frontend/.history
 frontend/.vscode
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
