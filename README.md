@@ -1,2 +1,1 @@
 # bd-coursework
-эрик)
