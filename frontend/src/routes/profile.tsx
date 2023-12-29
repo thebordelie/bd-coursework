@@ -1,20 +1,20 @@
-import { LoaderFunction, json } from "@remix-run/node";
-import { useNavigate } from "@remix-run/react";
-import { useEffect } from "react";
+import { LoaderFunction, json, redirect } from "@remix-run/node";
 import NavbarInner from "~/components/common/navigation/logginedNav";
 import { protectedRoute } from "~/components/common/protection/checkprotected";
 import NotificationFeed from "~/components/pages/notificationfeed/notificationfeed";
 import ProfileCard from "~/components/pages/profile/profilecard";
+import { APIEndpoints, APILINK } from "~/root";
 import { getSession } from "~/sessions";
 
 const Profile: React.FC = () => {
+
 	return (
 		<div>
 			<header>
 				<NavbarInner />
 			</header>
 			<main className="container mx-auto p-4">
-				<ProfileCard />
+				<ProfileCard/>
 				<NotificationFeed />
 			</main>
 		</div>
@@ -24,27 +24,48 @@ const Profile: React.FC = () => {
 
 export const loader: LoaderFunction = async ({ request }) => {
 	if (await protectedRoute(request)) {
-		throw new Error("you are logged out");
+		return redirect("/login");
 	}
 	const session = await getSession(
 		request.headers.get("Cookie")
 	);
+	let posts = []
+	let viewerPosts = []
+	try {
+		const response = await fetch(APILINK + APIEndpoints.all_events, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				cityName: await session.get("city")
+			})
+		});
+		posts = await response.json();
+
+		const viewerPostsResponse = await fetch(APILINK + APIEndpoints.viewerPosts, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				id: await session.get("userid")
+			})
+		});
+		viewerPosts = await viewerPostsResponse.json();
+	}
+	catch (error) {
+		//poh
+	}
 	return json({
 		fullname: session.get("fullname"),
 		gender: session.get("gender"),
 		city: session.get("city"),
-		role: session.get("role")
+		role: session.get("role"),
+		posts,
+		viewerPosts
 	});
 }
 
-export const ErrorBoundary = () => {
-	const navigate = useNavigate();
-	useEffect(() => {
-		setTimeout(() => {
-			navigate("/")
-		}, 2000);
-	});
-	return <h1>Вы разлогинились</h1>;
-}
 
 export default Profile;

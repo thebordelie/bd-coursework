@@ -7,13 +7,18 @@ import {
 	ScrollRestoration,
 } from "@remix-run/react";
 
-import styles from "./global.css";
 import { LinksFunction } from "@remix-run/node";
+import styles from "./global.css";
 
 export const APILINK = "http://25.74.13.166:8080/";
 export const enum APIEndpoints {
 	register = "auth/register",
-	login = "auth/login"
+	login = "auth/login",
+	organize = "organizer/event",
+	all_events = "member_management/all_events",
+	viewerPosts = "member_management/user_event",
+	viewEvent = "member_management/new_event",
+	unsubscribeEvent = "member_management/delete_event"
 }
 
 export default function App() {

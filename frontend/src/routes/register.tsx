@@ -1,5 +1,6 @@
-import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
+import { ActionFunctionArgs, LoaderFunction, json, redirect } from "@remix-run/node";
 import Navbar from "~/components/common/navigation/unlogginedNav";
+import { protectedRoute } from "~/components/common/protection/checkprotected";
 import RegisterForm, { RegisterDetails } from "~/components/forms/register";
 import { APIEndpoints, APILINK } from "~/root";
 
@@ -14,6 +15,13 @@ const Register: React.FC = () => {
 			</main>
 		</div>
 	)
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+	if (!await protectedRoute(request)) {
+		return redirect("/profile");
+	}
+	return null
 }
 
 export async function action({ request }: ActionFunctionArgs) {

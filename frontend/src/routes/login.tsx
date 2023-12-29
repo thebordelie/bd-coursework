@@ -1,5 +1,6 @@
-import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
+import { ActionFunctionArgs, LoaderFunction, json, redirect } from "@remix-run/node";
 import Navbar from "~/components/common/navigation/unlogginedNav";
+import { protectedRoute } from "~/components/common/protection/checkprotected";
 import LoginForm, { LoginDetails } from "~/components/forms/login";
 import { APIEndpoints, APILINK } from "~/root";
 import { commitSession, getSession } from "~/sessions";
@@ -15,6 +16,13 @@ const Login: React.FC = () => {
 			</main>
 		</div>
 	)
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+	if (!await protectedRoute(request)) {
+		return redirect("/profile");
+	}
+	return null
 }
 
 export async function action({ request }: ActionFunctionArgs) {
