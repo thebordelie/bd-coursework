@@ -22,7 +22,10 @@ export const enum APIEndpoints {
 	becomeMember = "member_management/new_member_event",
 	addMemberToVer = "member_management/new_member",
 	participatedEvents = "member_management/member_event",
-	deleteMember = "member_management/delete_member_event"
+	deleteMember = "member_management/delete_member_event",
+	getNonVerd = "organizer/non_verify_user",
+	verifyUser = "organizer/user",
+	participators = "organizer/all_users"
 }
 
 export default function App() {
